@@ -1,0 +1,14 @@
+﻿@using E_Commerce_Shared.DTO;
+@model CategoryDTO
+
+<form method="post" asp-action="EditCategory" asp-route-categoryId="@Model.Id">
+    <div class="row">
+        <div class="form-outline">
+            <input type="text" asp-for="@Model.Name" placeholder="CategoryName" />
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+
+</form>

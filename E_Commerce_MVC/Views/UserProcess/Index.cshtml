@@ -1,0 +1,10 @@
+﻿@using E_Commerce_MVC.Areas.Identity.Data;
+@model ApplicationUser
+@{
+    Layout = null;
+}
+
+<form method="post" asp-action="RegisterVerify" asp-controller="UserProcess" asp-route-concurrencyStamp="@Model.ConcurrencyStamp">
+    <button type="submit" class="btn btn-priamry" href="">Buraya tıklayarak hesabınızı doğrulayabilirsiniz!</button>
+</form>
+

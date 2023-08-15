@@ -1,0 +1,76 @@
+﻿@model SearchViewPageModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <form method="get" asp-action="Search">
+                <div class="mb-3">
+                    <label asp-for="@Model.productElasticDTO.ProductName" class="form-label">Product Name</label>
+                    <input asp-for="@Model.productElasticDTO.ProductName" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.productElasticDTO.ProductDescription" class="form-label">Product Description</label>
+                    <input asp-for="@Model.productElasticDTO.ProductDescription" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.productElasticDTO.Price" class="form-label">Gte Price</label>
+                    <input asp-for="@Model.productElasticDTO.Price" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.productElasticDTO.LtePrice" class="form-label">Lte Price</label>
+                    <input asp-for="@Model.productElasticDTO.LtePrice" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-10">
+            <div class="alert alert-success">
+                <span>
+                    Toplam @Model._listProductModel.Count kayıt bulunmuştur
+                </span>
+            </div>
+
+            <div class="row mt-5">
+                @foreach (var item in Model._listProductModel)
+                {
+                    <div class="col-md-4 mt-2">
+                        <div class="card text-black">
+                            <i class="fab fa-lg pt-3 pb-1 px-3"></i>
+                            <img src="~/Images/@item.ImageUrl" class="card-img-top" alt="Apple Computer" style="width: 100%; height: 290px;" />
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h5 class="card-title">@item.ProductName</h5>
+                                    <p class="text-muted mb-4">@item.ProductDescription</p>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between">
+                                        <span>@item.ProductName</span><span>@item.Price</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                                            <span>Total</span><span>@item.Price</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <form method="get" asp-controller="ProductClient" asp-action="GetProductById" asp-route-productId="@item.ProductId">
+                                <button type="submit" class="btn btn-secondary" style="margin-bottom:1px;margin-right:1px">Ürün Detayı</button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>

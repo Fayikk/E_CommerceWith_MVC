@@ -1,0 +1,94 @@
+﻿@{
+    Layout = null;
+}
+
+@model OrderConfirmationModel
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .confirmation-message {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .order-details {
+            margin-bottom: 20px;
+        }
+
+            .order-details h2 {
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .order-details p {
+                margin: 5px 0;
+            }
+
+        .thank-you {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #008000;
+            margin-bottom: 30px;
+        }
+
+        .contact-support {
+            text-align: center;
+        }
+
+            .contact-support p {
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+
+                .contact-support p a {
+                    color: #007BFF;
+                    text-decoration: none;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="confirmation-message">Order Confirmation</div>
+        <div class="order-details">
+            <h2>Order Details</h2>
+            <p><strong>Order Number:</strong> @Model.OrderNumber</p>
+            <p><strong>Date:</strong> @Model.OrderDate.ToString("dd MMMM yyyy");</p>
+            <p><strong>Total Amount:</strong>@Model.TotalAmount</p>
+            <!-- Add more order details here as needed -->
+        </div>
+        <div class="thank-you">Thank you for your order!</div>
+        <div class="contact-support">
+            <p>If you have any questions or need support, please <a href="mailto:support@example.com">contact us</a>.</p>
+            <p>Click! for return the Homepage <a asp-action="Index" asp-controller="ProductClient">Home page</a>.</p>
+        </div>
+    </div>
+</body>
+</html>

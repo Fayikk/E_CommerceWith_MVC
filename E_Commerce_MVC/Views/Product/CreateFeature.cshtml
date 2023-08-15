@@ -1,0 +1,32 @@
+﻿@model FeatureListModel
+
+<form method="post" asp-action="CreateFeatures" asp-controller="Product" asp-route-productId="@Model.ProductId">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Feature1</label>
+        <input asp-for="@Model.FeatureName[0]" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Feature2</label>
+        <input asp-for="@Model.FeatureName[1]" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Feature3</label>
+        <input asp-for="@Model.FeatureName[2]" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Feature4</label>
+        <input asp-for="@Model.FeatureName[3]" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Feature5</label>
+        <input asp-for="@Model.FeatureName[4]" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="col">
+        <button type="submit" class="btn btn-warning">Send For Save</button>
+    </div>
+</form>

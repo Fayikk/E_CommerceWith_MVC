@@ -1,0 +1,37 @@
+﻿@using E_Commerce_MVC.Services.Abstract;
+@inject IProductService _productService
+@{
+    int page = 1;
+    int countProducts = 0;
+    var response = _productService.ListProduct().Result.Data;
+    countProducts = response.Count;
+    var result = _productService.GetProducts(page).Result;
+    var deneme = result;
+}
+
+
+
+<style>
+    .pagination-buttons{
+        background-color:beige;
+        color:white;
+    }
+
+    .pagination-buttons button:hover{
+        background-color: beige;
+       
+    }
+
+</style>
+
+<nav >
+    <ul class="pagination pagination-buttons" >
+        @for (int i = 1; i <= result.Data.Pages; i++)
+        {
+            <form method="get" asp-action="GetAll" asp-controller="ProductClient" asp-route-page="@i">
+                <button type="submit" class="page-link" style="color:black">@i</button>
+
+            </form>
+        }
+    </ul>
+</nav>

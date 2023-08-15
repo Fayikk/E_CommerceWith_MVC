@@ -1,0 +1,8 @@
+﻿@if(User.IsInRole("Admin")){
+    <div class="row mr-4">
+        <li><a class="dropdown-item" asp-action="ProductList" asp-controller="Product">Pool In Products</a></li>
+
+        <li><a class="dropdown-item" asp-action="Index" asp-controller="Category">Pool In Categories</a></li>
+        <li><a class="dropdown-item" asp-action="Index" asp-controller="OrderAdmin">Order Settings</a></li>
+    </div>
+}

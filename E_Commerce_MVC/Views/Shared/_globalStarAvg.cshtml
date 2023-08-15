@@ -1,0 +1,32 @@
+﻿@using E_Commerce_Shared.Entity;
+@using E_Commerce_Shared;
+@model Product
+
+
+@{
+    double? starCount = 0;
+    starCount = Model.RateAvg;
+
+}
+<style>
+    .rating-color {
+        color: orange !important;
+</style>
+
+
+
+ @if(starCount != 0){
+                        <div class="stars-overlay" >
+                            @for (int i = 0; i < starCount; i++)
+                            {
+                                if (i < starCount)
+                                {
+                                    <script>
+                                        document.write('<i class="fa fa-star rating-color"></i>')
+                                    </script>
+                                }
+                            }
+                        </div>
+ }
+        
+  

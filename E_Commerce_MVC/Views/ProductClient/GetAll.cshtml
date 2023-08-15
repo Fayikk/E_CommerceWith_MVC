@@ -1,0 +1,73 @@
+﻿@using E_Commerce_Shared.Entity;
+@using E_Commerce_Shared;
+@model ProductSearchResult
+
+<style>
+    .container-content {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .row {
+        flex-grow: 1;
+    }
+
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px;
+        box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<partial name="_categoriesBadges" />
+<div class="container-content">
+    <div class="row mt-5">
+        @foreach (var item in Model.Products)
+        {
+            <div class="col-md-4 mt-2">
+                <div class="card text-black">
+
+                    <partial name="_globalStarAvg" model="@item"></partial>
+
+                    <i class="fab fa-lg pt-3 pb-1 px-3"></i>
+                    <img src="~/Images/@item.ImageUrl" class="card-img-top" alt="Apple Computer" style="width: 100%; height: 290px;" />
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h5 class="card-title">@item.ProductName</h5>
+                            <p class="text-muted mb-4">@item.ProductDescription</p>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between">
+                                <span>@item.ProductName</span><span>@item.Price.ToString("C")</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                                    <span>Total</span><span>@item.Price.ToString("C")</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <form method="get" asp-controller="ProductClient" asp-action="GetProductById" asp-route-productId="@item.Id">
+                        <button type="submit" class="btn btn-secondary" style="margin-bottom:1px;margin-right:1px">Ürün Detayı</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+    <div class="pagination-container">
+        <partial name="_pagination" style="text-center"></partial>
+    </div>
+</div>
+

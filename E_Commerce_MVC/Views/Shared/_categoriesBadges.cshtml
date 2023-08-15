@@ -1,0 +1,26 @@
+﻿@using E_Commerce_MVC.Services.Abstract;
+@using E_Commerce_Shared.Entity;
+@inject ICategoryService _categoryService
+@{
+    var result = _categoryService.ListCategory().Result;
+    List<Category> _categories = new List<Category>();
+    if (result != null)
+    {
+        _categories = result.Data;
+
+    }
+}
+<style>
+    a.badge{
+        text-decoration:none;
+    }
+</style>
+
+@foreach (var item in _categories)
+{
+   
+        <a asp-action="GetProductByCategory" asp-controller="ProductClient" asp-route-categoryId="@item.Id" class="badge bg-warning text-dark">@item.CategoryName</a>
+ 
+   
+
+}

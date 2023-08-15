@@ -1,0 +1,34 @@
+﻿@model ProductMultipleImage
+
+@{
+    ViewData["Title"] = "Added Photo For Product Details Carousel's";
+}
+
+<div class="row">
+    <div class="col">
+        <h3 class="display-4 border-bottom">
+            @ViewData["Title"]
+        </h3>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col">
+        <form method="post" enctype="multipart/form-data" asp-action="CreateMultipleImage" asp-route-productId="@Model.ProductId" >
+            <div class="custom-file">
+                <label asp-for="CoverPhoto" class="control-label"></label>
+                <input asp-for="CoverPhoto" class="custom-file-input" id="customFile" />
+                <span asp-validation-for="CoverPhoto" class="text-danger"></span>
+            </div>
+            <div class="row mt-3">
+                <div class="col mb-3">
+                    <input type="submit" value="CreateProduct" class="btn btn-primary" />
+                    <a class="btn btn-secondary" asp-action="Index" asp-controller="Home">
+                        <i class="fa fa-arrow-left ml-2"></i>Geri Dön
+                    </a>
+                </div>
+            </div>
+        </form>
+       
+    </div>
+</div>

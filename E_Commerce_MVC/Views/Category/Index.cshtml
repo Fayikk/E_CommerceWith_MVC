@@ -1,0 +1,85 @@
+﻿@using E_Commerce_Shared.Entity;
+@model List<Category>
+
+<style>
+    .accordion.accordion-flush {
+        background-color: #f0f0f0; /* Replace this with your desired background color */
+    }
+
+    .accordion-button {
+        background-color: #ffffff; /* Replace this with the desired button background color */
+        color: #000000; /* Replace this with the desired button text color */
+    }
+
+        /* Additional styles for the collapsed state */
+        .accordion-button:not(.collapsed) {
+            background-color: #dddddd; /* Replace this with the desired button background color when the accordion is open */
+        }
+</style>
+
+
+
+@if (Model != null)
+{
+    <div class="container">
+        <div class="col mb-3" >
+            <div class="text-end">
+                <form method="get" asp-action="CreateCategory" asp-controller="Category">
+                    <button type="submit" class="btn btn-warning">Add Category</button>
+                </form>
+            </div>
+         
+
+        </div>
+    
+   
+ 
+    @foreach (var item in Model)
+    {
+        <div class="accordion accordion-flush" id="accordionFlushExample" >
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" style="background-color:azure" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        @item.CategoryName
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="row mt-3 mb-3">
+                        <div class="col">
+                            <form method="post" asp-action="DeleteCategory" asp-controller="Category" asp-route-categoryId="@item.Id">
+                                    <button class="btn btn-primary" type="submit">Kategori Sil</button>
+
+                            </form>
+
+                        </div>
+                        <div class="col">
+                                <form method="get" asp-action="UpdateCategory" asp-controller="Category" asp-route-categoryId="@item.Id">
+                                    <button class="btn btn-primary" type="submit">Kategori Düzenle</button>
+
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+    }
+    </div>
+
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <p>Kategorilerde Ürün bulunmamaktadır</p>
+
+        </div>
+        <div class="col">
+            <form method="get" asp-action="CreateCategory" asp-controller="Category" >
+                <button type="submit" class="btn btn-warning" >Add Category</button>
+            </form>
+        </div>
+    </div>
+
+}

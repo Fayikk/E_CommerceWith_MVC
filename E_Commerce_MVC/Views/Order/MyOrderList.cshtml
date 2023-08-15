@@ -1,0 +1,110 @@
+﻿@using E_Commerce_Shared.Entity;
+
+@model List<Order>
+
+@{
+    decimal totalPrice = 0;
+    
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+
+
+    main {
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .product-list {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 20px;
+    }
+
+    .product {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+
+        .product img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+    .cart {
+        flex-basis: 300px;
+        border: 1px solid #ccc;
+        padding: 20px;
+    }
+
+        .cart h2 {
+            margin-top: 0;
+        }
+
+    .cart-items {
+        list-style: none;
+        padding: 0;
+    }
+
+    .total {
+        font-weight: bold;
+    }
+
+    .checkout {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+</style>
+
+@foreach (var item in Model)
+{
+    <div class="row">
+
+        <main>
+            @foreach (var product in item.Products)
+            {
+                totalPrice = totalPrice + product.Price;
+                <section class="product-list">
+                    <div class="product">
+                        <img src="~/Images/@product.ImageUrl" alt="Ürün 1">
+                        <h2>@product.ProductName</h2>
+                        <p>Price: @product.Price.ToString("c")</p>
+                    </div>
+
+                    <!-- Diğer ürünler burada listelenebilir -->
+                </section>
+                <section class="cart">
+
+                    <p class="total">Total:@totalPrice.ToString("c")</p>
+                </section>
+            }
+
+
+
+        </main>
+        </div>
+  
+    <p class="Status" style="color: greenyellow; font-size: 16px; font-weight: bold; line-height: 1.5; background-color: #333; padding: 5px;">Status: @item.Status</p>
+
+    totalPrice = 0;
+}
+
+
+
+

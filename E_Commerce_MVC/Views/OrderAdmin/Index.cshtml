@@ -1,0 +1,153 @@
+﻿@using E_Commerce_Shared.Entity;
+@model List<Order>
+
+    @{
+        decimal totalPrice = 0;
+    }
+
+<style>
+    /* Reset CSS - Tarayıcıların varsayılan stillerini sıfırlamak için kullanıyoruz */
+    body, h1, h2, h3, h4, h5, h6, p, ul, li, table {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+    }
+
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+    }
+
+        header h1 {
+            margin: 0;
+        }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    nav li {
+        margin-right: 20px;
+    }
+
+    nav a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    main {
+        margin: 20px;
+    }
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+
+    select {
+        padding: 5px;
+    }
+
+</style>
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sipariş Sayfası</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>E-Ticaret Admin</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Siparişler</a></li>
+                <li><a href="#">Ürünler</a></li>
+                <li><a href="#">Müşteriler</a></li>
+                <!-- Diğer sayfalar için gerekli bağlantılar eklenebilir -->
+            </ul>
+        </nav>
+    </header>
+
+
+    <main>
+        <h2>Siparişler</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sipariş Numarası</th>
+                    <th>Müşteri Adı</th>
+                    <th>Tarih</th>
+                    <th>Toplam Tutar</th>
+                    <th>Anlık Durum</th>
+
+                    <th>Durum</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                foreach (var product in item.Products)
+                {
+                    totalPrice += product.Price;
+                }
+                <tbody>
+                    <tr>
+                        <td>@item.OrderId</td>
+                        <td>@item.FirstName</td>
+                        <td>@item.OrderDate.ToShortDateString()</td>
+                        <td>@totalPrice</td>
+                        <td>@item.Status</td>
+                        <td>
+                            <form asp-action="StatusCreate" asp-controller="OrderAdmin" asp-route-orderId="@item.OrderId">
+
+                            
+                            <div class="form-group">
+                                <label for="orderStatus">Order Status</label>
+                                <select name="orderStatus" id="orderStatus" >
+                                    <option value="@item.Status" >@item.Status</option>
+                                    <option value="OrderWaiting">Waiting</option>
+                                    <option value="Shipping" >Shipped</option>
+                                    <option value="Completed" >Completed</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-warning">Set</button>
+                            </div>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+                totalPrice = 0;
+            }
+        </table>
+    </main>
+
+
+    <footer>
+        <!-- Sayfa alt bilgisi -->
+    </footer>
+</body>

@@ -1,0 +1,61 @@
+﻿@model ProductModel
+
+
+
+
+@{
+    ViewData["title"] = "Ürün ekle";
+}
+
+<div class="row">
+    <div class="col">
+        <h3 class="display-4 border-bottom" >
+            @ViewData["Title"]
+        </h3>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col">
+        <form method="post" enctype="multipart/form-data" asp-action="CreateProduct" >
+            <div class="form-group">
+                <label asp-for="CategoryId">CategoryId</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="@((List<SelectListItem>)ViewData["categories"])">
+                    <option selected>Choose</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductName">Product Name</label>
+                <input asp-for="ProductName" type="text" class="form-control" placeholder="product name" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductDescription">Product Description</label>
+                <input asp-for="ProductDescription" type="text" class="form-control" placeholder="product description" />
+                <span asp-validation-for="ProductDescription" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Price">Price</label>
+                <input asp-for="Price" type="text" class="form-control" placeholder="price" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="CoverPhoto"></label>
+                <input asp-for="CoverPhoto" class="custom-file-input" id="customFile" />
+                <span asp-validation-for="CoverPhoto" class="text-danger"></span>
+            </div>
+            <div class="row mt-3">
+                <div class="col mb-3">
+                    <input type="submit" value="CreateProduct" class="btn btn-primary" />
+                    <a class="btn btn-secondary" asp-action="Index" asp-controller="Home">
+                        <i class="fa fa-arrow-left ml-2"></i>Geri Dön
+                    </a>
+                </div>
+            </div>
+        </form>
+       
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@using E_Commerce_Shared.Entity;
+@model List<Product>
+
+@if (Model.Count != 0)
+{
+    @foreach (var item in Model)
+    {
+        <div class="col mt-4">
+            <div class="card">
+                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                    <img src="~/Images/@item.ImageUrl" class="img-fluid" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">@item.ProductName</h5>
+                        </div>
+                        <div class="col">
+                            <h5 class="card-title">@item.Price.ToString("C")</h5>
+                        </div>
+                    </div>
+
+                    <p class="card-text"></p>
+                    <div class="row">
+                        <div class="col">
+                            <form method="post" asp-route-productId="@item.Id" asp-controller="Product" asp-action="DeleteProduct">
+                                <button type="submit" class="btn btn-warning">Sil</button>
+                            </form>
+
+                        </div>
+                        <div class="col">
+                            <form method="get" asp-controller="Product" asp-action="UpdateProduct" asp-route-productId="@item.Id">
+                                <button class="btn btn-primary" type="submit">Ürün Düzenle</button>
+
+                            </form>
+                        </div>
+                        <div class="col">
+                            <form method="get" asp-controller="Product" asp-action="CreateFeature" asp-route-productId="@item.Id">
+                                <button class="btn btn-primary" type="submit">Özellikleri Ekle</button>
+
+                            </form>
+                        </div>
+                        <div class="col">
+                            <form method="get" asp-controller="Product" asp-action="MultipleImage" asp-route-productId="@item.Id">
+                                <button class="btn btn-primary" type="submit">Ana sayfa resimleri ekle</button>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    }
+}
+else
+{
+    <body>
+        <h1>Database has not any products</h1>
+    </body>
+}

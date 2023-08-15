@@ -1,0 +1,100 @@
+﻿@model OrderCheckoutModel
+
+
+<div class="row">
+    <div class="col-md-8 mb-4">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h5 class="mb-0">Biling details</h5>
+            </div>
+              <form method="post" asp-action="CreateCheckout" asp-controller="Order">
+            <div class="card-body">
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-outline">
+                            <input asp-for="FirstName" type="text" id="form7Example1" class="form-control" />
+                            <label class="form-label" for="form7Example1">First name</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-outline">
+                            <input asp-for="LastName" type="text" id="form7Example2" class="form-control" />
+                            <label class="form-label" for="form7Example2">Last name</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input -->
+                <div class="form-outline mb-4">
+                    <input asp-for="City" type="text" id="form7Example3" class="form-control" />
+                    <label class="form-label" for="form7Example3">City</label>
+                </div>
+
+                <!-- Text input -->
+                <div class="form-outline mb-4">
+                    <input asp-for="Region" type="text" id="form7Example4" class="form-control" />
+                    <label class="form-label" for="form7Example4">Region</label>
+                </div>
+
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <input asp-for="PostalCode" type="text" id="form7Example5" class="form-control" />
+                    <label class="form-label" for="form7Example5">Postal Code</label>
+                </div>
+
+                <!-- Number input -->
+                <div class="form-outline mb-4">
+                    <input asp-for="Street" type="text" id="form7Example6" class="form-control" />
+                    <label class="form-label" for="form7Example6">Street</label>
+                </div>
+
+                <!-- Message input -->
+                <div class="form-outline mb-4">
+                    <input asp-for="Apartment" class="form-control" id="form7Example7" rows="4" />
+                    <label class="form-label" for="form7Example7">Apartment</label>
+                </div>
+
+            </div>
+                <button type="submit" class="btn btn-outline-warning">Go to payment</button>
+            </form>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h5 class="mb-0">Products</h5>
+            </div>
+            <div class="card-body">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="~/Images/@item.ImageUrl" alt="Card image cap">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-body">
+                                    <p class="card-text">@item.ProductName</p>
+
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="card-body">
+                                <p class="card-text" style="font-size:medium">Price: @item.Price.ToString("C")</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+  
+    
+
+ 
+</div>

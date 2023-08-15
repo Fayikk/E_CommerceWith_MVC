@@ -1,0 +1,208 @@
+﻿@using E_Commerce_MVC.Services.Abstract;
+@using E_Commerce_Shared.Entity;
+
+@model List<Product>
+@{
+    double? starCount = 0;
+}
+    <style>
+        .container-content{
+            display:flex;
+            flex-direction:column;
+            min-height:100vh;
+        }
+
+        .row{
+            flex-grow:1;
+        }
+
+    .pagination-container{
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        background-color:#fff;
+        padding:10px;
+        box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .rating-color{
+        color:orange !important;
+    }
+    
+    </style>
+
+    <div class="row">
+        <div class="col-md-4">
+        <form method="get" asp-action="Search" asp-controller="FilterProduct"> 
+                <button type="submit" class="btn btn-warning">Filtre Uygula</button>
+            </form>
+        </div>
+        <div class="col-md-8">
+        <partial name="_categoriesBadges" />
+
+        </div>
+    </div>
+
+<div class="container-content">
+
+    <div class="row mt-5">
+
+        @foreach (var item in Model)
+        {
+            starCount = item.RateAvg;
+            <div class="col-md-4 mt-2">
+                <div class="card text-black">
+                    @if(starCount != 0){
+                        <div class="stars-overlay" >
+                            @for (int i = 0; i < starCount; i++)
+                            {
+                                if (i < starCount)
+                                {
+                                    <script>
+                                        document.write('<i class="fa fa-star rating-color"></i>')
+                                    </script>
+                                }
+                            }
+                        </div>
+
+                    }
+                    <div class="card text-center">
+                        <a class="btn add-to-favorites" data-productId="@item.Id" data-favorite="false">
+                            <i class="fa-regular fa-heart fa-xl" style="color:#aab41d;"></i>
+
+                        </a>
+                    </div>
+                    @*<partial name="_favorites" model="Model" ></partial>*@
+
+                    <i class="fab fa-lg pt-3 pb-1 px-3"></i>
+                    <img src="~/Images/@item.ImageUrl" class="card-img-top" alt="Apple Computer" style="width: 100%; height: 290px;"/>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h5 class="card-title">@item.ProductName</h5>
+                            <p class="text-muted mb-4">@item.ProductDescription</p>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between">
+                                <span>@item.ProductName</span><span>@item.Price.ToString("C")</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                                    <span>Total</span><span>@item.Price.ToString("C")</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <form method="get" asp-controller="ProductClient" asp-action="GetProductById" asp-route-productId="@item.Id">
+                        <button type="submit" class="btn btn-secondary" style="margin-bottom:1px;margin-right:1px">Ürün Detayı</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+    <div class="pagination-container" >
+        <partial name="_pagination" style="text-center" ></partial>
+    </div>
+</div>
+
+
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const products = [];
+
+        fetch(`https://localhost:7159/GetAllMyFavourites`, { method: "GET" })
+            .then(response => response.json())
+            .then(data => {
+                //buraya data kaydet
+                for (let i = 0; i < data.length; i++) {
+                    products.push(data[i]);
+                }
+                console.log(products.length);
+                var favoriteButtons = document.querySelectorAll(".btn[data-favorite]");
+                favoriteButtons.forEach(button => {
+                    const productId = button.getAttribute("data-productId");
+                    const isFavorite = button.getAttribute("data-favorite");
+                    var icon = button.querySelector("i");
+                    for (let i = 0; i < products.length; i++) {
+
+                        if (products[i].productId == productId) {
+                            console.log(data[i]);
+                            icon.classList.remove("fa-regular");
+                            icon.classList.add("fa-solid");
+                            button.setAttribute("data-favorite", "true");
+                        }
+                    }
+
+                });
+            })
+            .catch(error => {
+                console.error("Hata oluştu:", error);
+            });
+
+
+    });
+
+
+
+
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const heartButtons = document.querySelectorAll(".btn[data-favorite]");
+
+        heartButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.getAttribute("data-productId");
+                const IsFavourite = this.getAttribute("data-favorite");
+                if (IsFavourite == "false") {
+                    this.setAttribute("data-favorite", "true");
+                    fetch(`https://localhost:7159/AddMyFavourites/${productId}?`, { method: "POST" })
+                        .then(response => response.json())
+                        .then(data => {
+                            this.setAttribute("data-favorite", "true");
+                        });
+                }
+                else {
+                    this.setAttribute("data-favorite", "false");
+                    fetch(`https://localhost:7159/DeleteMyFavourites/${productId}?`, { method: "DELETE" })
+                        .then(response => response.json())
+                        .then(data => {
+                            this.setAttribute("data-favorite", "false");
+                        });
+                }
+            });
+        });
+    });
+</script>
+
+
+<script>
+    const outlineHearts = document.querySelectorAll('.fa-regular')
+    const solidHearts = document.querySelectorAll('.fa-solid')
+
+    outlineHearts.forEach(heart => {
+        heart.addEventListener('click', () => {
+            heart.classList.toggle('fa-solid')
+        });
+    });
+
+    outlineHearts.forEach(heart => {
+        heart.addEventListener('click', () => {
+            heart.classList.toggle('fa-regular')
+        });
+    });
+
+
+</script>
