@@ -43,18 +43,17 @@ namespace E_Commerce_MVC.Services.Concrete
             return false;
         }
 
-        public async Task<ServiceResponse<List<Favourite>>> GetAllMyFavourites(string userId)
+        public async Task<ServiceResponse<List<Favourite>>> GetAllMyFavourite(string userId)
         {
-            ServiceResponse<List<Favourite>> _favourite = new ServiceResponse<List<Favourite>>();
-            var user = await _context.Favourites.Where(x => x.UserId == userId).ToListAsync();
-            if (user != null)
+            var myFavorites = await _context.Favourites.Where(x => x.UserId == userId).ToListAsync();
+            ServiceResponse<List<Favourite>> _response = new ServiceResponse<List<Favourite>>();
+            if (myFavorites != null)
             {
-                _favourite.Data = user;
-                _favourite.Success = true;
-                return _favourite;
+                _response.Success = true;
+                _response.Data = myFavorites;
+                return _response;
             }
-            _favourite.Success = false;
-            return _favourite;
+            return null;
         }
     }
 }

@@ -102,19 +102,40 @@
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                     <div>
-                                        <strong>Total amount</strong>
-                                        <strong>
-                                            <p class="mb-0">(including VAT)</p>
-                                        </strong>
+                                        <strong id="total" >Total amount</strong>
                                     </div>
-                                    <span><strong>@itemsPrice</strong></span>
+                                    <span id="discountAmount" ><strong></strong></span>
+                                    <span id="oldPrice" ><strong></strong></span>
+                                    <span id="totalPrice" ><strong>@itemsPrice</strong></span>
                                 </li>
                             </ul>
-                            <form method="get" asp-action="GoToCheckout" asp-controller="Order">
+
+                            <div class="row">
+                                <div class="col">
+                                      <div class="form-group mx-sm-3 mb-2">
+                                        <label for="inputPassword2" class="sr-only">Coupon Code</label>
+                                        <input type="text" class="form-control" id="inputPassword2" name="CouponCode" placeholder="code">
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" id="checkCodeButton" class="btn btn-primary mb-2" >Check Code</button>
+                                </div>
+                                <div class="text-center">
+                                    <span id="notFound"><strong></strong></span>
+
+                                </div>
+
+                            </div>
+
+                              <div class="text-center">
+                                    <form method="get" asp-action="GoToCheckout" asp-controller="Order">
+                              
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">
                                     Go to checkout
                                 </button>
                             </form>
+                                </div>
+                          
 
 
                         </div>
@@ -132,3 +153,56 @@ else{
         </strong>
     </h1>
 }
+
+
+<script>
+    const prices = document.getElementById("totalPrice");
+    const discountAmount = document.getElementById("discountAmount");
+    const oldPrice = document.getElementById("oldPrice");
+    const inputValue = document.getElementById("inputPassword2");
+    const btnDiscount = document.getElementById("checkCodeButton");
+    const totalAmount = document.getElementById("total");
+    const couponNotFound = document.getElementById("notFound");
+
+    document.addEventListener("DOMContentLoaded",function(){
+        btnDiscount.addEventListener("click",function(){
+            var couponCode = document.getElementById("inputPassword2").value;
+            var url = "https://localhost:7159/Discount/CheckCoupon?CouponCode=" + encodeURIComponent(couponCode);
+            var itemsPrice = 0;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.data != null){
+                        couponNotFound.textContent = "";
+                        console.log(data.data);
+                        itemsPrice = parseFloat(prices.textContent);
+                        var discountPrice = parseFloat(itemsPrice) - (parseFloat(itemsPrice) * parseFloat(data.data.discountAmount) / 100);
+                        oldPrice.innerText = prices.textContent;
+                        oldPrice.style.color = "red";
+                        oldPrice.style.textDecoration = "line-through";
+                        prices.innerText = discountPrice.toString();
+                        prices.style.color = "green";
+                        inputValue.style.display = "none";
+                        btnDiscount.style.display = "none";
+                        totalAmount.innerHTML = "Discounted Price"
+                    }
+                       
+                  
+                   else {
+
+                        couponNotFound.style.color = "red";
+                        couponNotFound.textContent = "Coupon is not found";
+                    }
+             
+                })
+                .catch(error => {
+                    console.error("Error:",error);
+                })
+
+
+        })
+    })
+
+
+
+</script>

@@ -107,18 +107,16 @@ namespace E_Commerce_MVC.Controllers
             await _favouriteService.DeleteMyFavourite(favourite.Id);
         }
 
-        [HttpGet("GetAllMyFavourites")]
-        public async Task<List<Favourite>> GetAllMyFavourites()
+        [HttpGet]
+        public async Task<List<Favourite>> GetAllMyFavourite()
         {
             var user = HttpContext.User.Identity.Name;
             var userDetail = await _userManager.FindByNameAsync(user);
-            var favourites = await _favouriteService.GetAllMyFavourites(userDetail.Id);
-            if (favourites.Data != null)
-            {
-                return favourites.Data;
-            }
-            return null;
-        }
+            var response = await _favouriteService.GetAllMyFavourite(userDetail.Id);
+            return response.Data;   
+      
 
+        }
+   
     }
 }

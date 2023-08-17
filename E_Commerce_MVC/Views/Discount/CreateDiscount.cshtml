@@ -1,0 +1,31 @@
+﻿@using E_Commerce_Shared.DTO;
+@model DiscountDTO
+
+@{
+    ViewBag.Title = "Create Coupon";
+}
+
+
+
+
+
+
+<form method="post" asp-action="CreateDiscount" asp-controller="Discount"> 
+    <div class="form-group">
+        <label for="exampleInputEmail1">Disccount Code</label>
+        <input type="text" class="form-control" asp-for="@Model.CouponCode" placeholder="Discount Code">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Coupon Amount</label>
+        <input type="number" class="form-control" asp-for="@Model.DiscountAmount" placeholder="Discount Amount">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Coupon Count</label>
+        <input type="number" class="form-control" asp-for="@Model.DiscountCount" placeholder="Discount Count">
+    </div>
+    <div class="form-check">
+        <input type="checkbox" asp-for="@Model.IsActive" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Is Active?</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

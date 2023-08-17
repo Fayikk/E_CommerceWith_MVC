@@ -13,6 +13,7 @@ namespace E_Commerce_MVC.MappingProcess
             CreateMap<OrderDTO,OrderCheckoutModel>().ReverseMap();
             CreateMap<Star, StarDTO>().ReverseMap();
             CreateMap<Favourite, FavouriteDTO>().ReverseMap();
+            CreateMap<Discount, DiscountDTO>().ReverseMap();
 
         }
     }

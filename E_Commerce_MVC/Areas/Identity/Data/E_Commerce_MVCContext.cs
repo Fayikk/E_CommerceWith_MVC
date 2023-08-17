@@ -27,4 +27,5 @@ public class E_Commerce_MVCContext : IdentityDbContext<ApplicationUser>
     public DbSet<Order> Orders { get; set; }
     public DbSet<Star> Stars { get; set; }
     public DbSet<Favourite> Favourites { get; set; }
+    public DbSet<Discount> Discounts { get; set; }
 }

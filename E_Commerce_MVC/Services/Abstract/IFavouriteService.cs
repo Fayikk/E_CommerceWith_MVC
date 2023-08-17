@@ -8,6 +8,7 @@ namespace E_Commerce_MVC.Services.Abstract
     {
         Task<bool> AddMyFavourite(FavouriteDTO model);
         Task<bool> DeleteMyFavourite(int favouriteId);
-        Task<ServiceResponse<List<Favourite>>> GetAllMyFavourites(string userId);
+        Task<ServiceResponse<List<Favourite>>> GetAllMyFavourite(string userId);
+     
     }
 }

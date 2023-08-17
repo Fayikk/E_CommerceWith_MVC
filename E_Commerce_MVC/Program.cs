@@ -33,6 +33,7 @@ builder.Services.AddScoped<IFilterProductService, FilterProductService>();
 builder.Services.AddScoped<IEmailService, EmailService>();  
 builder.Services.AddScoped<IStarService, StarService>();
 builder.Services.AddScoped<IFavouriteService, FavouriteService>();
+builder.Services.AddScoped<IDiscountService, DiscountService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddElastic(builder.Configuration);
 
