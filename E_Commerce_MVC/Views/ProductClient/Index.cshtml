@@ -4,6 +4,7 @@
 @model List<Product>
 @{
     double? starCount = 0;
+    Product product = new Product();
 }
     <style>
         .container-content{
@@ -18,17 +19,44 @@
 
     .pagination-container{
         display: flex;
-        justify-content:center;
+       justify-content:center;
         align-items:center;
         background-color:#fff;
-        padding:10px;
+        /*padding:10px;*/
         box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
     }
 
     .rating-color{
         color:orange !important;
     }
-    
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .close-button {
+        float: right;
+        cursor: pointer;
+    }
+
+
     </style>
 
     <div class="row">
@@ -42,6 +70,22 @@
 
         </div>
     </div>
+
+
+
+
+
+<div class="row">
+    <div class="col-3">Total Connection/Users:</div>
+    <div class="col-4">
+        <span id="totalUsersCounter"></span>
+
+    </div>
+</div>
+<input type="text" id="deneme" />
+
+<button class="btn btn-warning" id="notification" >Gönder</button>
+
 
 <div class="container-content">
 
@@ -95,22 +139,57 @@
                         </div>
 
                     </div>
-                    <form method="get" asp-controller="ProductClient" asp-action="GetProductById" asp-route-productId="@item.Id">
-                        <button type="submit" class="btn btn-secondary" style="margin-bottom:1px;margin-right:1px">Ürün Detayı</button>
+                    <div class="row" >
+                        <div class="col" >
+                            <form method="get" asp-controller="ProductClient" asp-action="GetProductById" asp-route-productId="@item.Id">
+                                <button type="submit" class="btn btn-secondary" style="margin-bottom:1px;margin-right:1px">Ürün Detayı</button>
 
-                    </form>
+                            </form>
+                            </div>
+                        <div class="col">
+                            <!-- Button trigger modal -->
+                            <button class="openModalBtn btn btn-warning">Modalı Aç</button>
+
+                            <div id="myModal" class="modal">
+
+                                <div class="modal-content">
+                                    <span class="close-button" id="closeModal">&times;</span>
+
+                                    <img src="~/Images/@item.ImageUrl">
+                                    
+                                    <h2>@item.ProductName</h2>
+                                    <p>@item.ProductDescription</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+                  
 
                 </div>
 
             </div>
         }
+  
 
+       
     </div>
-    <div class="pagination-container" >
-        <partial name="_pagination" style="text-center" ></partial>
+   
+    <div class="pagination-container text-center " >
+        <partial name="_pagination" ></partial>
     </div>
+    @if(User.Identity.Name == "admin@gmail.com")
+    {
+        <div style="position: fixed; bottom: 0; right: 0;">
+            <div class="text-md-end">
+                <partial name="_messageBox" model="product"></partial>
+            </div>
+        </div>
+    }
+   
+
+
 </div>
-
 
 
 
@@ -203,3 +282,7 @@
 
 
 </script>
+<script src="~/js/signalr.js"></script>
+<script src="~/js/userCount.js"></script>
+<script src="~/js/notification.js"></script>
+<script src="~/js/modal.js"></script>

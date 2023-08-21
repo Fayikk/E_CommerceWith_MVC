@@ -5,6 +5,7 @@ using E_Commerce_MVC.Services.Abstract;
 using E_Commerce_MVC.Services.Concrete;
 using E_Commerce_MVC.Extensions;
 using E_Commerce_MVC.Core.ForEmail;
+using E_Commerce_MVC.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IStarService, StarService>();
 builder.Services.AddScoped<IFavouriteService, FavouriteService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
 builder.Services.AddElastic(builder.Configuration);
 
@@ -58,6 +60,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseSession();
+app.MapHub<TotalHub>("/hubs/userCount");
+app.MapHub<ChatHub>("/hubs/chat");
+app.MapHub<NotificationHub>("/hubs/notification");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=ProductClient}/{action=Index}/{id?}");

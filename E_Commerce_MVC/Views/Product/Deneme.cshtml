@@ -1,0 +1,27 @@
+﻿
+
+   @for (var i = 0; i <= 10; i++)
+    {
+        <div class="row">
+            <button id="deneme" class="btn btn-warning" type="submit">Deneme</button>
+        </div>
+    }
+
+
+
+
+
+<script>
+    var buttons = document.querySelectorAll(".btn");
+   
+        for (let i = 0; i < buttons.length; i++) {
+            console.log("deneme" + buttons[i].textContent + i);
+            buttons[i].addEventListener("click",function(){
+                console.log("deneme - " + i );
+            })
+        }
+
+
+    
+
+</script>

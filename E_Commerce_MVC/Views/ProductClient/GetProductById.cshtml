@@ -11,8 +11,13 @@
 @{
     bool IsThisProduct = true;
     var userEmail = User.Identity.Name;
+    ApplicationUser user = new ApplicationUser();
+    if (userEmail != null)
+    {
+        var _user = await _userManager.FindByNameAsync(userEmail);
+        user = _user;
 
-    var user = await _userManager.FindByNameAsync(userEmail);
+    }
     var IsTrueOrder = await _orderService.IsMyProduct(user.Id, Model.Id);
     var IsAnyVote = _context.Stars.Where(x => x.UserId == user.Id).ToList();
     if(IsAnyVote != null)
@@ -208,6 +213,9 @@
                     <form method="post" asp-action="AddBasketItem" asp-controller="Basket" asp-route-productId="@Model.Id">
                         <button type="submit" class="cart-button">Add Shopping Cart</button>
                     </form>
+                </div>
+                <div class="col">
+                    <partial name="_messageBox" model="Model"></partial>
                 </div>
             </div>
 

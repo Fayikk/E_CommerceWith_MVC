@@ -225,7 +225,10 @@ namespace E_Commerce_MVC.Controllers
             return View();
         }
 
-
+        public IActionResult Deneme()
+        {
+            return View();
+        }
         private void LoadCategorySelectDataView()
         {
             List<Category> categories = _categoryService.GetCategories();
