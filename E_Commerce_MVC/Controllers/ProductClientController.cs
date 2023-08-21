@@ -95,7 +95,7 @@ namespace E_Commerce_MVC.Controllers
                 ProductId = productId,
                 UserId = userDetail.Id,
             };
-            await _favouriteService.AddMyFavourite(model);
+            var response = await _favouriteService.AddMyFavourite(model);
         }
 
         [HttpDelete("DeleteMyFavourites/{productId}")]
@@ -104,7 +104,7 @@ namespace E_Commerce_MVC.Controllers
             var user = HttpContext.User.Identity.Name;
             var userDetail = await _userManager.FindByNameAsync(user);
             var favourite = await _context.Favourites.FirstOrDefaultAsync(x => x.ProductId == productId && userDetail.Id == x.UserId);
-            await _favouriteService.DeleteMyFavourite(favourite.Id);
+            var response = await _favouriteService.DeleteMyFavourite(favourite.Id);
         }
 
         [HttpGet]
