@@ -1,8 +1,13 @@
-﻿<div class="container">
+﻿@using E_Commerce_MVC.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
 
+@inject UserManager<ApplicationUser> _userManager;
 
+@{
+    var userList =  _userManager.Users.ToList();
+}
 
-
+<div class="container">
     <div class="row">
         <div class="col-3">Total Views:</div>
         <div class="col-4">
@@ -25,6 +30,7 @@
         <div class="col-3">Sender</div>
         <div class="col-4"><input type="text" value="@User.Identity.Name" id="senderEmail" /></div>
     </div>
+   
     <div class="row">
         <div class="col-3">Receiver</div>
         <div class="col-4"><input type="text" id="receiverEmail" /></div>

@@ -31,7 +31,7 @@ namespace E_Commerce_MVC.Hubs
             else
             {
                 var receiver = await _userManager.FindByEmailAsync(returnUser);
-                await Clients.User(sender.Id.ToString()).SendAsync("ReceiverUser", senderEmail, message,"");
+                await Clients.User(sender.Id.ToString()).SendAsync("ReceiverUser", senderEmail, message,""); 
                 await Clients.User(receiver.Id.ToString()).SendAsync("ReceiverUser", senderEmail, message,"");
             }
         }
